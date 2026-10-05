@@ -16,7 +16,7 @@ LVGL 使用 `third_party/lvgl` Git 子模块，固定到 `v9.6.0`。首次建立
 Debian/Ubuntu/Armbian 的桌面开发环境安装依赖：
 
 ```bash
-sudo apt install build-essential cmake pkg-config libsdl2-dev libfreetype6-dev fonts-noto-cjk
+sudo apt install build-essential cmake pkg-config libsdl2-dev libfreetype6-dev
 git submodule update --init --recursive
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build -j
@@ -24,7 +24,7 @@ cmake --build build -j
 ```
 
 窗口需要可用的图形会话，当前不能直接通过 DRM 接管 Armbian 屏幕。按 Esc 或关闭窗口退出。
-程序自动查找常见 Noto CJK 字体路径，也可用 `EDGE_PANEL_FONT=/path/to/font.ttf ./build/edge-panel` 指定包含中英文、数字与标点的字体。
+程序默认使用随构建复制到 `build/fonts/`（preset 构建为对应构建目录的 `fonts/`）的 [NotoSansSC.ttf](fonts/NotoSansSC.ttf)，也可用 `EDGE_PANEL_FONT=/path/to/font.ttf ./build/edge-panel` 指定包含中英文、数字与标点的字体。该文件为 `wght` 可变字体，由 FreeType 直接加载，`wght` 范围为 100–900，当前使用字体默认字重 100，不做静态字体转换。移动构建产物时通过 `EDGE_PANEL_FONT` 指定字体的新路径。
 
 左侧显示系统本地时间、mock 天气，右侧显示示例日程和消息。点击“下一条消息”循环查看文本、程序生成的风景图片和应用通知；“刷新示例”交替改变温度；“切换连接”模拟离线，保留最近数据且暂停 mock 刷新。所有网络数据均为 mock，没有请求真实后端。
 

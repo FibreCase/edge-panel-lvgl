@@ -29,10 +29,9 @@ uint32_t unsigned_option(const std::string& text) {
 }
 std::string find_font() {
     if(const char* path=std::getenv("EDGE_PANEL_FONT")) return path;
-    for(const auto* path:{"/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
-                         "/usr/share/fonts/google-noto-sans-cjk-vf-fonts/NotoSansCJK-VF.ttc"})
-        if(std::filesystem::exists(path)) return path;
-    throw std::runtime_error("Chinese font missing. Install fonts-noto-cjk or set EDGE_PANEL_FONT to a CJK TTF/TTC file.");
+    const std::string path=EDGE_PANEL_DEFAULT_FONT;
+    if(std::filesystem::is_regular_file(path)) return path;
+    throw std::runtime_error("Font missing: "+path+". Deploy fonts/NotoSansSC.ttf or set EDGE_PANEL_FONT.");
 }
 int main(int argc,char** argv) {
     bool test=false,touch_test=false,has_seed=false;

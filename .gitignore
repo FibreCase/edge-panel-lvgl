@@ -1,3 +1,5 @@
 /refer/
 /build*/
 /.deps/
+/fonts/*
+.DS_Store

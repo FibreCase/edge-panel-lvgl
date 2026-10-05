@@ -9,7 +9,7 @@
 在 ARM64 Armbian 上执行：
 
 ```bash
-sudo apt install clang cmake ninja-build pkg-config libdrm-dev libfreetype6-dev fonts-noto-cjk evtest
+sudo apt install clang cmake ninja-build pkg-config libdrm-dev libfreetype6-dev evtest
 git submodule update --init --recursive
 cmake --preset arm64-drm-native
 cmake --build --preset arm64-drm-native --parallel
@@ -61,7 +61,7 @@ sudo ./build/arm64-drm-native/edge-panel \
 
 这些参数用于校准，不能在设备树和应用中重复做相同变换。`--no-touch` 仅用于显示测试；正常运行需明确指定触摸路径，程序不会猜测输入设备。
 
-设备路径也可通过 `EDGE_PANEL_DRM_DEVICE`、`EDGE_PANEL_TOUCH_DEVICE` 指定，命令行参数优先。中文字体通过 `EDGE_PANEL_FONT` 指定或自动查找 Noto CJK。
+设备路径也可通过 `EDGE_PANEL_DRM_DEVICE`、`EDGE_PANEL_TOUCH_DEVICE` 指定，命令行参数优先。默认使用构建目录 `fonts/NotoSansSC.ttf`，部署时一并复制该字体，并通过 `EDGE_PANEL_FONT=/部署路径/fonts/NotoSansSC.ttf` 指定。
 
 ## 权限与运行
 

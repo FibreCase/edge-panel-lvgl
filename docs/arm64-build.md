@@ -8,7 +8,7 @@
 Debian/Ubuntu/Armbian 安装依赖：
 
 ```bash
-sudo apt install clang cmake ninja-build pkg-config libsdl2-dev libfreetype6-dev fonts-noto-cjk
+sudo apt install clang cmake ninja-build pkg-config libsdl2-dev libfreetype6-dev
 git submodule update --init --recursive
 cmake --preset clang-native
 cmake --build --preset clang-native --parallel
@@ -28,7 +28,7 @@ Debian/Ubuntu 宿主机可安装 `clang lld cmake ninja-build pkg-config`；其�
 建议先在设备安装：
 
 ```bash
-sudo apt install g++ libc6-dev libsdl2-dev libfreetype6-dev fonts-noto-cjk
+sudo apt install g++ libc6-dev libsdl2-dev libfreetype6-dev
 ```
 
 再将设备的 `/usr`、`/lib` 和必要的动态链接器目录复制到开发机的独立 sysroot，例如 `/opt/sysroots/armbian-arm64`。保留目录结构及权限，并检查绝对符号链接不会指向宿主机目录；Debian usr-merge 系统需保留 `/lib` 到 `/usr/lib` 等关系。也可以使用对应系统构建工具提供的 SDK/sysroot。

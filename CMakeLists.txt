@@ -35,6 +35,11 @@ add_subdirectory(third_party/lvgl)
 add_subdirectory(third_party/material-color-utilities)
 set(EDGE_PANEL_THEME_SOURCES src/ui/theme/material_color.cpp src/ui/theme/color_scheme.cpp)
 add_executable(edge-panel src/main.cpp ${EDGE_PANEL_PLATFORM_SOURCE} src/services/mock_provider.cpp src/ui/panel.cpp ${EDGE_PANEL_THEME_SOURCES})
+# Keep the supplied variable font with the build's runtime assets.
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/fonts")
+configure_file(fonts/NotoSansSC.ttf fonts/NotoSansSC.ttf COPYONLY)
+target_compile_definitions(edge-panel PRIVATE
+    EDGE_PANEL_DEFAULT_FONT="${CMAKE_CURRENT_BINARY_DIR}/fonts/NotoSansSC.ttf")
 target_include_directories(edge-panel PRIVATE src)
 target_link_libraries(lvgl PUBLIC Freetype::Freetype)
 target_link_libraries(edge-panel PRIVATE lvgl ${EDGE_PANEL_PLATFORM_LIBRARY} material-color-utilities)
