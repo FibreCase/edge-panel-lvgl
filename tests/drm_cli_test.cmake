@@ -1,0 +1,15 @@
+function(expect_failure expected)
+    execute_process(COMMAND "${PANEL_EXECUTABLE}" ${ARGN}
+        RESULT_VARIABLE result OUTPUT_VARIABLE output ERROR_VARIABLE error)
+    if(NOT result EQUAL 1 OR NOT error MATCHES "${expected}")
+        message(FATAL_ERROR "DRM error path failed: ${ARGN}: ${result} ${error}")
+    endif()
+endfunction()
+expect_failure("Rotation must be 90 or 270" --rotation 0)
+expect_failure("Touch space must be physical or logical" --touch-space invalid)
+expect_failure("Self-test and screenshots require SDL" --self-test)
+expect_failure("Touch test requires a touch device" --touch-test --no-touch)
+# Use explicit dummy paths: these tests never open a real DRM/input device.
+expect_failure("Set --touch-device" --drm-device /dev/null)
+expect_failure("does not support dumb scanout buffers" --drm-device /dev/null --no-touch)
+expect_failure("Cannot open touch device" --drm-device /dev/null --touch-device /dev/null/edge-panel-input)

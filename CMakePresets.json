@@ -1,0 +1,75 @@
+{
+  "version": 2,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 20,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "clang-native",
+      "displayName": "Native Linux Clang (host or ARM64 device)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/clang-native",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_TESTING": "ON",
+        "EDGE_PANEL_BACKEND": "SDL"
+      }
+    },
+    {
+      "name": "arm64-clang",
+      "displayName": "Cross compile Armbian ARM64 using Clang + LLD",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/arm64-clang",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/cmake/toolchains/aarch64-clang.cmake",
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BUILD_TESTING": "OFF"
+      }
+    },
+    {
+      "name": "arm64-drm-native",
+      "displayName": "Native Clang DRM/KMS (run on ARM64 device)",
+      "inherits": "clang-native",
+      "binaryDir": "${sourceDir}/build/arm64-drm-native",
+      "cacheVariables": {
+        "EDGE_PANEL_BACKEND": "DRM"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "clang-native",
+      "configurePreset": "clang-native"
+    },
+    {
+      "name": "arm64-clang",
+      "configurePreset": "arm64-clang"
+    },
+    {
+      "name": "arm64-drm-native",
+      "configurePreset": "arm64-drm-native"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "clang-native",
+      "configurePreset": "clang-native",
+      "output": {
+        "outputOnFailure": true
+      }
+    },
+    {
+      "name": "arm64-drm-native",
+      "configurePreset": "arm64-drm-native",
+      "output": {
+        "outputOnFailure": true
+      }
+    }
+  ]
+}
